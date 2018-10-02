@@ -17,7 +17,6 @@ app.component("itmRoot", {
                 }
                 return total
             }
-            this.testString = 'TEST TEST'
         }
 
         onVote(candidate) {
@@ -155,8 +154,7 @@ app.component("itmVote", {
 app.component("itmResults", {
     bindings: {
         candidates: "<",
-        totalVotes: "<",
-        teststring: '<'
+        totalVotes: "<"
     },
     controller: class { },
     template: `
