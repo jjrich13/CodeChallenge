@@ -1,8 +1,12 @@
 # ITM21st Code Challenge
 
+## Overview
+
+The app represents an online poll for candidates initially chosen from Puppies, Kittens and Gerbils. A user can view voting results, cast votes for a candidate, or add/remove candidates from the race.
+
 ## What I implemented
 
-## Base
+### Base
 
 *   Display the percentage of the vote that each candidate has in the Live Results section. For example, if there are 2 candidates and Candidate A has 10 votes and Candidate B has 30 votes, then Candidate A would have 25% of the vote and Candidate B would have 75% of the vote.
 *   Order the Live Results by the vote count descending.
@@ -11,16 +15,14 @@
 *   Ensure that a new candidate with the same name cannot be added.
 *   Implement the Add New Candidate action
 *   Implement the Remove Candidate action
+
 ### Bonus
+
 *   Added ImgUrl input to display photos of candiates
 *   Implemented AngularJS material Styling
 *   A Card system to display the leaders with image, title and percentage of total vote.
 
-The challenge app is an AngularJS front end with an NodeJS express server for static files.
-
-The app represents an online poll for candidates initially chosen from Puppies, Kittens and Gerbils. A user can view voting results, cast votes for a candidate, or add/remove candidates from the race.
-
-### To Run the app
+## To Run the app
 
 1.  Download and install [Node.js](https://nodejs.org). Install a version >= 8.0.0. Along with Node.js, NPM will be installed which you need for step 4.
 2.  Clone the app from GitHub
