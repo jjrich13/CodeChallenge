@@ -1,15 +1,19 @@
-const app = angular.module("Candidate.App", []);
+const app = angular.module("Candidate.App", ['ngMaterial', 'ngMessages']);
 
 app.component("itmRoot", {
     controller: class {
         constructor() {
-            this.candidates = [{ name: "Puppies", votes: 10 }, { name: "Kittens", votes: 12 }, { name: "Gerbils", votes: 7 }];
-            this.totalVotes = function(){
+            this.candidates = [
+                { name: "Puppies", imgUrl: "https://cdn1-www.dogtime.com/assets/uploads/2010/12/puppies.jpg", votes: 10 },
+                { name: "Kittens", imgUrl: "http://r.ddmcdn.com/w_606/s_f/o_1/cx_0/cy_15/cw_606/ch_404/APL/uploads/2014/06/10-kitten-cuteness-1.jpg", votes: 12 }, 
+                { name: "Gerbils", imgUrl: "https://a-z-animals.com/media/animals/images/original/gerbil4.jpg", votes: 7 }
+            ];
+            this.totalVotes = function () {
                 let total = 0;
                 for (let i = 0; i < this.candidates.length; i++) {
                     total += this.candidates[i].votes;
 
-                    
+
                 }
                 return total
             }
@@ -19,25 +23,25 @@ app.component("itmRoot", {
         onVote(candidate) {
             console.log(`Vote for ${candidate.name}`);
             let indexOfCandidateToVoteFor = this.candidates.indexOf(candidate);
-            this.candidates[indexOfCandidateToVoteFor].votes ++;
-            
+            this.candidates[indexOfCandidateToVoteFor].votes++;
+
         }
 
         onAddCandidate(candidate) {
             let duplicate = false;
-            if(candidate.name === ''){
-                alert('Make sure you actually type something')
+            if (candidate.name === ''|| candidate.imgUrl === '') {
+                alert('Make sure you fill in both fields')
                 return false;
             }
             this.candidates.forEach(specificCandidate => {
-                if(specificCandidate.name.toLowerCase() === candidate.name.toLowerCase()){
+                if (specificCandidate.name.toLowerCase() === candidate.name.toLowerCase()) {
                     alert('A candidate with that name already exists. Enter a new name.')
                     duplicate = true
                 }
             })
-            
-            if(!duplicate){
-                this.candidates.push({name: candidate.name, votes: 0});
+
+            if (!duplicate) {
+                this.candidates.push({ name: candidate.name, imgUrl: candidate.imgUrl, votes: 0 });
             }
             console.log(`Added candidate ${candidate.name}`);
         }
@@ -46,12 +50,12 @@ app.component("itmRoot", {
             console.log(`Removed candidate ${candidate.name}`);
             let indexOfCandidateToDelete = this.candidates.indexOf(candidate);
             this.candidates.splice(indexOfCandidateToDelete, 1);
-            
+
         }
     },
     template: `
         <h1>Which candidate brings the most joy?</h1>
-             
+            
         <itm-results 
             candidates="$ctrl.candidates"
             total-votes="$ctrl.totalVotes"
@@ -80,7 +84,8 @@ app.component("itmManagement", {
     controller: class {
         constructor() {
             this.newCandidate = {
-                name: ""
+                name: "",
+                imgUrl: ""
             };
         }
 
@@ -94,25 +99,33 @@ app.component("itmManagement", {
         }
     },
     template: `
-        <h2>Manage Candidates</h2>
+    
+        <md-content>
+            <h2>Manage Candidates</h2>
 
-        <h3>Add New Candidate</h3>
-        <form ng-submit="$ctrl.submitCandidate($ctrl.newCandidate)" novalidate>
+            <h3>Add New Candidate</h3>
+            <form ng-submit="$ctrl.submitCandidate($ctrl.newCandidate)" novalidate>
 
-            <label>Candidate Name</label>
-            <input type="text" ng-model="$ctrl.newCandidate.name" required>
+                <md-input-container>
+                    <label>Candidate Name</label>
+                    <input type="text" ng-model="$ctrl.newCandidate.name" required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Image Url</label>
+                    <input type="text" ng-model="$ctrl.newCandidate.imgUrl" required>
+                </md-input-container>
+                    <md-button type="submit">Add</md-button>
+                
+            </form>
 
-            <button type="submit">Add</button>
-        </form>
-
-        <h3>Remove Candidate</h3>
-        <ul>
-            <li ng-repeat="candidate in $ctrl.candidates">
-                <span ng-bind="candidate.name"></span>
-                <button type="button" ng-click="$ctrl.removeCandidate(candidate)">X</button>
-            </li>
-        </ul>
-
+            <h3>Remove Candidate</h3>
+            <md-list class="list">
+                <md-list-item ng-repeat="candidate in $ctrl.candidates">
+                    <span ng-bind="candidate.name"></span>
+                    <md-button class="md-fab md-secondary" type="button" ng-click="$ctrl.removeCandidate(candidate)"><md-icon> clear </md-icon></md-button>
+                </md-list-item>
+            </md-list>
+        </md-content>
     `
 });
 
@@ -121,15 +134,21 @@ app.component("itmVote", {
         candidates: "<",
         onVote: "&"
     },
-    controller: class {},
+    controller: class { },
     template: `
-        <h2>Cast your vote!</h2>
 
-        <button type="button"
-            ng-repeat="candidate in $ctrl.candidates"
-            ng-click="$ctrl.onVote({ $candidate: candidate })">
-            <span ng-bind="candidate.name"></span>
-        </button>
+    <md-content>
+        <div class="voteSection">
+            <h2>Cast your vote!</h2>
+
+            
+            <md-button class="md-raised" type="button"
+                ng-repeat="candidate in $ctrl.candidates"
+                ng-click="$ctrl.onVote({ $candidate: candidate })">
+                <span ng-bind="candidate.name"></span><md-icon> how_to_vote </md-icon>
+            </md-button>
+        </div>
+    </md-content>
     `
 });
 
@@ -139,14 +158,16 @@ app.component("itmResults", {
         totalVotes: "<",
         teststring: '<'
     },
-    controller: class {},
+    controller: class { },
     template: `
         <h2>Live Results</h2>
-        <ul>
-            <li ng-repeat="candidate in $ctrl.candidates | orderBy: '-votes'">
-                <span ng-bind="candidate.name"></span>
-                <strong>{{(candidate.votes/$ctrl.totalVotes())*100 | number:1}}%</strong>
-            </li>
-        </ul>
+
+        <md-content layout="row" layout-wrap>
+                <md-card ng-repeat="candidate in $ctrl.candidates | orderBy: '-votes'">
+                    <img ng-src={{candidate.imgUrl}}>
+                    <md-card-content ng-bind="candidate.name"></md-card-content>
+                    <md-card-content class="bold">{{(candidate.votes/$ctrl.totalVotes())*100 | number:1}}%</md-card-content>
+                </md-card>
+        <md-content>
     `
 });
