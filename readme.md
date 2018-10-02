@@ -4,7 +4,7 @@
 
 The app represents an online poll for candidates initially chosen from Puppies, Kittens and Gerbils. A user can view voting results, cast votes for a candidate, or add/remove candidates from the race.
 
-## What I implemented
+## Features Implemented
 
 ### Base
 
@@ -18,9 +18,9 @@ The app represents an online poll for candidates initially chosen from Puppies, 
 
 ### Bonus
 
-*   Added ImgUrl input to display photos of candiates
-*   Implemented AngularJS material Styling
-*   A Card system to display the leaders with image, title and percentage of total vote.
+*   Added image url input to display photos of candidates
+*   Implemented AngularJS Material for styling
+*   A card system to display the candidates containing image, title and percentage of total vote.
 
 ## To Run the app
 
@@ -32,7 +32,7 @@ The app represents an online poll for candidates initially chosen from Puppies, 
 
 ### Notes
 
-*   For the sake of easy testing, I did not make the image url need to be unique. Just re-use the same url
-*   Here is a url of an image of a kangaroo than you can use to copy and paste when testing https://s3.amazonaws.com/wildambienceassets/wp-content/uploads/2018/03/02141133/nsw_02246.jpg
-*   I left in the console logs that were already there in case you preferred them
-*   There are comments in some areas of the code to explain my thought processes
+*   For the sake of easy testing, I did not require the image url to be unique. You can re-use the same url for multiple entries.
+*   Here is the url of an image of a kangaroo that you can copy and paste when testing https://s3.amazonaws.com/wildambienceassets/wp-content/uploads/2018/03/02141133/nsw_02246.jpg
+*   I left in the console logs that were already there in case you preferred them.
+*   There are comments in some areas of the code to explain my thought processes.
