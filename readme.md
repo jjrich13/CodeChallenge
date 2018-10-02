@@ -29,3 +29,8 @@ The app represents an online poll for candidates initially chosen from Puppies, 
 3.  Run `npm install` to install express.js which is used to run the demo server
 4.  Run the app in the IDE or run `npm start` manually. This will start the server which serves up the static files in the /public directory.
 5.  Navigate to http://localhost:3000 to see the app running.
+
+### Notes
+
+*   For the sake of easy testing, I did not make the image url need to be unique. Just re-use the same url
+*   Here is a url of an image of a kangaroo than you can use to copy and paste when testing https://s3.amazonaws.com/wildambienceassets/wp-content/uploads/2018/03/02141133/nsw_02246.jpg

@@ -27,18 +27,21 @@ app.component("itmRoot", {
         }
 
         onAddCandidate(candidate) {
+            //declare variable to indicate duplicated names
             let duplicate = false;
+            //check for blank inputs, if so, alert user and exit function
             if (candidate.name === ''|| candidate.imgUrl === '') {
                 alert('Make sure you fill in both fields')
                 return false;
             }
+            //check for duplicated names
             this.candidates.forEach(specificCandidate => {
                 if (specificCandidate.name.toLowerCase() === candidate.name.toLowerCase()) {
                     alert('A candidate with that name already exists. Enter a new name.')
                     duplicate = true
                 }
             })
-
+            //if the name is not duplicated, add the new candidate
             if (!duplicate) {
                 this.candidates.push({ name: candidate.name, imgUrl: candidate.imgUrl, votes: 0 });
             }
@@ -90,7 +93,9 @@ app.component("itmManagement", {
 
         submitCandidate(candidate) {
             this.onAdd({ $candidate: candidate });
+            //clear the inputs on submit
             this.newCandidate.name = '';
+            this.newCandidate.imgURL = '';
         }
 
         removeCandidate(candidate) {
