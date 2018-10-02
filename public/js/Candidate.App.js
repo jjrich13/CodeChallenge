@@ -18,12 +18,28 @@ app.component("itmRoot", {
 
         onVote(candidate) {
             console.log(`Vote for ${candidate.name}`);
+            let indexOfCandidateToVoteFor = this.candidates.indexOf(candidate);
+            this.candidates[indexOfCandidateToVoteFor].votes ++;
             
         }
 
         onAddCandidate(candidate) {
+            let duplicate = false;
+            if(candidate.name === ''){
+                alert('Make sure you actually type something')
+                return false;
+            }
+            this.candidates.forEach(specificCandidate => {
+                if(specificCandidate.name.toLowerCase() === candidate.name.toLowerCase()){
+                    alert('A candidate with that name already exists. Enter a new name.')
+                    duplicate = true
+                }
+            })
+            
+            if(!duplicate){
+                this.candidates.push({name: candidate.name, votes: 0});
+            }
             console.log(`Added candidate ${candidate.name}`);
-            this.candidates.push({name: candidate.name, votes: 0});
         }
 
         onRemoveCandidate(candidate) {
@@ -70,6 +86,7 @@ app.component("itmManagement", {
 
         submitCandidate(candidate) {
             this.onAdd({ $candidate: candidate });
+            this.newCandidate.name = '';
         }
 
         removeCandidate(candidate) {
@@ -126,7 +143,7 @@ app.component("itmResults", {
     template: `
         <h2>Live Results</h2>
         <ul>
-            <li ng-repeat="candidate in $ctrl.candidates">
+            <li ng-repeat="candidate in $ctrl.candidates | orderBy: '-votes'">
                 <span ng-bind="candidate.name"></span>
                 <strong>{{(candidate.votes/$ctrl.totalVotes())*100 | number:1}}%</strong>
             </li>
