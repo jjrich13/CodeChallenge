@@ -34,3 +34,5 @@ The app represents an online poll for candidates initially chosen from Puppies, 
 
 *   For the sake of easy testing, I did not make the image url need to be unique. Just re-use the same url
 *   Here is a url of an image of a kangaroo than you can use to copy and paste when testing https://s3.amazonaws.com/wildambienceassets/wp-content/uploads/2018/03/02141133/nsw_02246.jpg
+*   I left in the console logs that were already there in case you preferred them
+*   There are comments in some areas of the code to explain my thought processes
