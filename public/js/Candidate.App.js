@@ -4,25 +4,42 @@ app.component("itmRoot", {
     controller: class {
         constructor() {
             this.candidates = [{ name: "Puppies", votes: 10 }, { name: "Kittens", votes: 12 }, { name: "Gerbils", votes: 7 }];
+            this.totalVotes = function(){
+                let total = 0;
+                for (let i = 0; i < this.candidates.length; i++) {
+                    total += this.candidates[i].votes;
+
+                    
+                }
+                return total
+            }
+            this.testString = 'TEST TEST'
         }
 
         onVote(candidate) {
             console.log(`Vote for ${candidate.name}`);
+            
         }
 
         onAddCandidate(candidate) {
             console.log(`Added candidate ${candidate.name}`);
+            this.candidates.push({name: candidate.name, votes: 0});
         }
 
         onRemoveCandidate(candidate) {
             console.log(`Removed candidate ${candidate.name}`);
+            let indexOfCandidateToDelete = this.candidates.indexOf(candidate);
+            this.candidates.splice(indexOfCandidateToDelete, 1);
+            
         }
     },
     template: `
         <h1>Which candidate brings the most joy?</h1>
              
         <itm-results 
-            candidates="$ctrl.candidates">
+            candidates="$ctrl.candidates"
+            total-votes="$ctrl.totalVotes"
+            teststring="$ctrl.testString">
         </itm-results>
 
         <itm-vote 
@@ -101,7 +118,9 @@ app.component("itmVote", {
 
 app.component("itmResults", {
     bindings: {
-        candidates: "<"
+        candidates: "<",
+        totalVotes: "<",
+        teststring: '<'
     },
     controller: class {},
     template: `
@@ -109,7 +128,7 @@ app.component("itmResults", {
         <ul>
             <li ng-repeat="candidate in $ctrl.candidates">
                 <span ng-bind="candidate.name"></span>
-                <strong ng-bind="candidate.votes"></strong>
+                <strong>{{(candidate.votes/$ctrl.totalVotes())*100 | number:1}}%</strong>
             </li>
         </ul>
     `
